@@ -360,11 +360,13 @@ public class TiConfiguration implements Serializable {
   private int rawKVBatchWriteTimeoutInMS = getInt(TIKV_RAWKV_BATCH_WRITE_TIMEOUT_IN_MS);
   private int rawKVScanTimeoutInMS = getInt(TIKV_RAWKV_SCAN_TIMEOUT_IN_MS);
   private int rawKVCleanTimeoutInMS = getInt(TIKV_RAWKV_CLEAN_TIMEOUT_IN_MS);
-  private Optional<Integer> rawKVReadSlowLogInMS = getIntOption(TIKV_RAWKV_READ_SLOWLOG_IN_MS);
-  private Optional<Integer> rawKVWriteSlowLogInMS = getIntOption(TIKV_RAWKV_WRITE_SLOWLOG_IN_MS);
-  private Optional<Integer> rawKVBatchReadSlowLogInMS =
+  private transient Optional<Integer> rawKVReadSlowLogInMS =
+      getIntOption(TIKV_RAWKV_READ_SLOWLOG_IN_MS);
+  private transient Optional<Integer> rawKVWriteSlowLogInMS =
+      getIntOption(TIKV_RAWKV_WRITE_SLOWLOG_IN_MS);
+  private transient Optional<Integer> rawKVBatchReadSlowLogInMS =
       getIntOption(TIKV_RAWKV_BATCH_READ_SLOWLOG_IN_MS);
-  private Optional<Integer> rawKVBatchWriteSlowLogInMS =
+  private transient Optional<Integer> rawKVBatchWriteSlowLogInMS =
       getIntOption(TIKV_RAWKV_BATCH_WRITE_SLOWLOG_IN_MS);
   private int rawKVScanSlowLogInMS = getInt(TIKV_RAWKV_SCAN_SLOWLOG_IN_MS);
 
