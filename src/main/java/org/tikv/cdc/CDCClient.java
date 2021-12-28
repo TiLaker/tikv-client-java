@@ -80,11 +80,11 @@ public class CDCClient implements AutoCloseable {
   }
 
   public synchronized long getMinResolvedTs() {
-    return resolvedTsSet.firstEntry().getElement();
+    return resolvedTsSet.firstEntry() == null ? 0L : resolvedTsSet.firstEntry().getElement();
   }
 
   public synchronized long getMaxResolvedTs() {
-    return resolvedTsSet.lastEntry().getElement();
+    return resolvedTsSet.lastEntry() == null ? 0L : resolvedTsSet.firstEntry().getElement();
   }
 
   public synchronized void close() {
@@ -209,7 +209,8 @@ public class CDCClient implements AutoCloseable {
     final TiRegion region = regionClients.get(regionId).getRegion();
     session.getRegionManager().onRequestFail(region); // invalidate cache for corresponding region
 
+    long minResolvedTs = getMinResolvedTs();
     removeRegions(Arrays.asList(regionId));
-    applyKeyRange(keyRange, getMinResolvedTs()); // reapply the whole keyRange
+    applyKeyRange(keyRange, minResolvedTs); // reapply the whole keyRange
   }
 }
